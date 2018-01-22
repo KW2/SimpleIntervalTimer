@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants">
+
+    <TextView
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="12dp"
+        android:background="#A2FFFF"/>
+
+    <Button
+        android:id="@+id/item_deleteBtn"
+        android:layout_alignParentRight="true"
+        android:text="삭제"
+        android:layout_marginRight="5dp"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/item_timeName"
+        android:layout_toLeftOf="@id/item_deleteBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="기록명"
+        android:textSize="20dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:textStyle="bold"
+        android:textColor="#000000"/>
+
+</RelativeLayout>

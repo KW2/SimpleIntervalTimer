@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">SIT</string>
+    <string name="main_title">간편 타이머</string>
+    <string name="btn_plus">시간 추가</string>
+    <string name="btn_list">목록 보기</string>
+    <string name="btn_manual">사용 설명</string>
+    <string name="btn_language">언어 변경</string>
+    <string name="btn_ko">한 국 어</string>
+    <string name="btn_en">English</string>
+    <string name="btn_ja">日本語</string>
+    <string name="tip_timeName">타이머 이름을 입력해주세요.</string>
+    <string name="setNum">반복 횟수</string>
+    <string name="workTime">작업 시간</string>
+    <string name="restTime">휴식 시간</string>
+    <string name="input_plusTitle">타이머 추가</string>
+    <string name="input_updateTitle">타이머 수정</string>
+    <string name="cancle">취소</string>
+    <string name="save">저장</string>
+    <string name="update">수정</string>
+    <string name="list_text">저장된 타이머가 없습니다.</string>
+    <string name="delete_title">삭제 확인</string>
+    <string name="delete_body">해당 타이머를 삭제 하시겠습니까?</string>
+    <string name="ok">확인</string>
+    <string name="delete_ok">삭제 완료</string>
+    <string name="insert_ok">추가 완료</string>
+    <string name="update_ok">수정 완료</string>
+</resources>

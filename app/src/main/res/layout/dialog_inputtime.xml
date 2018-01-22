@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/input_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="30dp"
+        android:text="@string/input_plusTitle"/>
+
+    <EditText
+        android:id="@+id/input_timeName"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/input_title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:hint="@string/tip_timeName" />
+
+    <LinearLayout
+        android:id="@+id/input_body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/input_timeName"
+        android:orientation="vertical"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/setNum" />
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp">
+
+            <Button
+                android:id="@+id/setsMinBtn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:text="-" />
+
+            <EditText
+                android:id="@+id/setsNum"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:inputType="number"
+                android:text="3" />
+
+            <Button
+                android:id="@+id/setsPlsBtn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:text="+" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:text="@string/workTime" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:orientation="horizontal"
+                android:layout_marginRight="30dp"
+                >
+
+                <Button
+                    android:id="@+id/wtMinBtn"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:text="-" />
+
+                <EditText
+                    android:id="@+id/wtMNum"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:text="00" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=":"
+                    android:textColor="#000000" />
+
+                <EditText
+                    android:id="@+id/wtSNum"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:text="00" />
+
+                <Button
+                    android:id="@+id/wtPlsBtn"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:text="+" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:text="@string/restTime" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:orientation="horizontal"
+                android:layout_marginRight="30dp">
+
+                <Button
+                    android:id="@+id/rtMinBtn"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:text="-" />
+
+                <EditText
+                    android:id="@+id/rtMNum"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:text="00" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=":"
+                    android:textColor="#000000" />
+
+                <EditText
+                    android:id="@+id/rtSNum"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:text="00" />
+
+                <Button
+                    android:id="@+id/rtPlsBtn"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:text="+" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/input_body"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/input_cancle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/cancle"/>
+
+        <Button
+            android:id="@+id/input_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/save"/>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

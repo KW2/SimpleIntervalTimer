@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/language_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_language"
+        android:textSize="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="100dp"/>
+    <Button
+        android:id="@+id/language_koBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_ko"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/language_title"
+        android:layout_marginBottom="5dp"
+        />
+    <Button
+        android:id="@+id/language_enBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_en"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/language_koBtn"
+        android:layout_marginBottom="5dp"
+        />
+    <Button
+        android:id="@+id/language_jaBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_ja"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/language_enBtn"
+        android:layout_marginBottom="5dp"
+        />
+
+
+</RelativeLayout>
