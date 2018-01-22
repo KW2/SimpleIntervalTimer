@@ -6,8 +6,8 @@ package com.kw2.kw2.sit;
 
 public class ListViewItem {
 
-    private String timeName;
-    private int id, setNum, workTime, restTime;
+    private String timeName, workTime, restTime;
+    private int id, setNum;
 
     public String getTimeName() {
         return timeName;
@@ -33,20 +33,26 @@ public class ListViewItem {
         this.setNum = setNum;
     }
 
-    public int getWorkTime() {
+    public String getWorkTime() {
         return workTime;
     }
 
-    public void setWorkTime(int workTime) {
+    public void setWorkTime(String workTime) {
         this.workTime = workTime;
     }
 
-    public int getRestTime() {
+    public String getRestTime() {
         return restTime;
     }
 
-    public void setRestTime(int restTime) {
+    public void setRestTime(String restTime) {
         this.restTime = restTime;
     }
+
+    public String getTimeValue() {
+        String result = this.setNum + " / " + this.workTime + " / " + this.restTime;
+        return result;
+    }
+
 }
 

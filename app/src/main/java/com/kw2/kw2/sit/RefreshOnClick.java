@@ -5,5 +5,5 @@ package com.kw2.kw2.sit;
  */
 
 public interface RefreshOnClick {
-   void onRefreshClick() ;
+   void onRefreshClick(ListViewItem item) ;
 }

@@ -20,6 +20,7 @@
         <activity android:name=".ActivityLanguage"></activity>
         <activity android:name=".ActivityManual"></activity>
         <activity android:name=".ActivityListView"></activity>
+        <activity android:name=".ActivityTimer"></activity>
     </application>
 
 

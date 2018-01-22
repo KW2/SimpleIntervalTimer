@@ -3,6 +3,7 @@ package com.kw2.kw2.sit;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
@@ -60,7 +61,7 @@ class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE sit ( Id INTEGER PRIMARY KEY" + " AUTOINCREMENT, timeName TEXT, setNum INTEGER, workTime INTEGER, restTime INTEGER );");
+        db.execSQL("CREATE TABLE sit ( Id INTEGER PRIMARY KEY" + " AUTOINCREMENT, timeName TEXT, setNum INTEGER, workTime TEXT, restTime TEXT );");
 
     }
 
@@ -70,7 +71,7 @@ class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void insertTime(String timeName, int setNum, int workTime, int restTime){
+    public void insertTime(String timeName, int setNum, String workTime, String restTime){
         myDb.execSQL("INSERT INTO sit VALUES (null, '" + timeName + "', '" + setNum + "', '" + workTime + "', '" + restTime + "');");
     }
 
@@ -78,5 +79,11 @@ class DBHelper extends SQLiteOpenHelper {
         myDb.delete("sit", "id = ? ", new String[]{Integer.toString(id)});
     }
 
+    // 마지막 입력 아이디값 검색
+    public int getInsertId() {
+        Cursor cursor = myDb.rawQuery("select * from sit", null);
+        cursor.moveToLast();
+        return cursor.getInt(0);
+    }
 }
 

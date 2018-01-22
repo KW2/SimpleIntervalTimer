@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
@@ -62,12 +63,14 @@ public class ActivityListView extends Activity implements com.kw2.kw2.sit.ListAd
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                /*Intent intent = new Intent(ActivityListView.this, ActivityTimer.class);
+                Intent intent = new Intent(ActivityListView.this, ActivityTimer.class);
+                intent.putExtra("id", items.get(position).getId());
                 intent.putExtra("timeName", items.get(position).getTimeName());
                 intent.putExtra("setNum", items.get(position).getSetNum());
                 intent.putExtra("workTime", items.get(position).getWorkTime());
                 intent.putExtra("restTime", items.get(position).getRestTime());
-                startActivity(intent);*/
+                intent.putExtra("timeValue", items.get(position).getTimeValue());
+                startActivity(intent);
             }
 
         });
@@ -102,8 +105,8 @@ public class ActivityListView extends Activity implements com.kw2.kw2.sit.ListAd
             item.setId(cursor.getInt(0));
             item.setTimeName(cursor.getString(1));
             item.setSetNum(cursor.getInt(2));
-            item.setWorkTime(cursor.getInt(3));
-            item.setRestTime(cursor.getInt(4));
+            item.setWorkTime(cursor.getString(3));
+            item.setRestTime(cursor.getString(4));
             list.add(item);
         }
 
@@ -152,7 +155,11 @@ public class ActivityListView extends Activity implements com.kw2.kw2.sit.ListAd
 
 
     @Override
-    public void onRefreshClick() {
+    public void onRefreshClick(ListViewItem item) {
+        items.add(item);
+
+        blankText.setText(" ");
+
         adapter.notifyDataSetChanged();
     }
 }
@@ -323,9 +330,24 @@ class DialogMaker {
                 @Override
                 public void onClick(View view) {
                     // timer 주가 작업
-                    refreshOnClick.onRefreshClick();
+                    String timeNameStr = timeNmae.getText().toString();
+                    int setInt = Integer.parseInt(setsNum.getText().toString());
+                    String wkTimeStr = wtMNum.getText().toString() + ":" + wtSNum.getText().toString();
+                    String rtTimeStr = rtMNum.getText().toString() + ":" + rtSNum.getText().toString();
+
+                    helper.insertTime(timeNameStr, setInt, wkTimeStr, rtTimeStr);
+
+                    ListViewItem item = new ListViewItem();
+                    item.setId(helper.getInsertId());
+                    item.setTimeName(timeNameStr);
+                    item.setSetNum(setInt);
+                    item.setWorkTime(wkTimeStr);
+                    item.setRestTime(rtTimeStr);
+
                     Toast.makeText(context, R.string.insert_ok, Toast.LENGTH_SHORT).show();
                     cstDialog.dismiss();
+
+                    refreshOnClick.onRefreshClick(item);
 
                 }
             });

@@ -24,4 +24,6 @@
     <string name="delete_ok">삭제 완료</string>
     <string name="insert_ok">추가 완료</string>
     <string name="update_ok">수정 완료</string>
+    <string name="ready">준비</string>
+
 </resources>

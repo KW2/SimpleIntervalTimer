@@ -46,11 +46,12 @@ public class ListAdapter extends ArrayAdapter<ListViewItem> {
         final ListViewItem listViewItem = (ListViewItem) getItem(position);
 
         TextView timeName = (TextView) convertView.findViewById(R.id.item_timeName);
+        TextView timeValue = (TextView) convertView.findViewById(R.id.item_timeValue);
 
         Button deleteBtn = (Button) convertView.findViewById(R.id.item_deleteBtn);
 
         timeName.setText(listViewItem.getTimeName());
-
+        timeValue.setText(listViewItem.getTimeValue());
 
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
