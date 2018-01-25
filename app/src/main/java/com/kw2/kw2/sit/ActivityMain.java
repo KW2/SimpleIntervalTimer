@@ -1,6 +1,7 @@
 package com.kw2.kw2.sit;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -9,6 +10,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import java.util.ArrayList;
 
 public class ActivityMain extends Activity implements View.OnClickListener {
 
@@ -79,11 +82,54 @@ class DBHelper extends SQLiteOpenHelper {
         myDb.delete("sit", "id = ? ", new String[]{Integer.toString(id)});
     }
 
+    public void updateTime(int id, String timeName, int setNum, String workTime, String restTime){
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("id", id);
+        contentValues.put("timeName", timeName);
+        contentValues.put("setNum", setNum);
+        contentValues.put("workTime", workTime);
+        contentValues.put("restTime", restTime);
+        myDb.update("sit", contentValues, "id = ? ", new String[]{Integer.toString(id)});
+    }
+
     // 마지막 입력 아이디값 검색
     public int getInsertId() {
         Cursor cursor = myDb.rawQuery("select * from sit", null);
         cursor.moveToLast();
         return cursor.getInt(0);
+    }
+
+    // set값 검색
+    public ListViewItem getItem(int id){
+        ListViewItem item = new ListViewItem();
+        Cursor cursor = myDb.rawQuery("select * from sit where id=" + id, null);
+        while (cursor.moveToNext()) {
+            item.setId(id);
+            item.setTimeName(cursor.getString(1));
+            item.setSetNum(cursor.getInt(2));
+            item.setWorkTime((cursor.getString(3)));
+            item.setRestTime((cursor.getString(4)));
+        }
+        return item;
+    }
+
+    // items 세팅
+    public ArrayList<ListViewItem> getItems(){
+        ListViewItem item;
+        ArrayList<ListViewItem> list = new ArrayList<ListViewItem>();
+
+        Cursor cursor = myDb.rawQuery("SELECT * FROM sit", null);
+        while (cursor.moveToNext()) {
+            item = new ListViewItem();
+            item.setId(cursor.getInt(0));
+            item.setTimeName(cursor.getString(1));
+            item.setSetNum(cursor.getInt(2));
+            item.setWorkTime(cursor.getString(3));
+            item.setRestTime(cursor.getString(4));
+            list.add(item);
+        }
+
+        return list;
     }
 }
 

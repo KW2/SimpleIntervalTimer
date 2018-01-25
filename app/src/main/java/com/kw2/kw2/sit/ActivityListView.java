@@ -6,11 +6,9 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -29,10 +27,10 @@ import java.util.Iterator;
 
 public class ActivityListView extends Activity implements com.kw2.kw2.sit.ListAdapter.ListBtnClickListener, RefreshOnClick {
     DBHelper helper;
-    SQLiteDatabase db;
     ArrayList<ListViewItem> items;
     com.kw2.kw2.sit.ListAdapter adapter;
     TextView blankText;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,13 +41,8 @@ public class ActivityListView extends Activity implements com.kw2.kw2.sit.ListAd
 
         // DB 생성
         helper = new DBHelper(ActivityListView.this);
-        try {
-            db = helper.getWritableDatabase();
-        } catch (SQLiteException ex) {
-            db = helper.getReadableDatabase();
-        }
 
-        loadDB(db, items);
+        items.addAll(helper.getItems());
 
         adapter = new com.kw2.kw2.sit.ListAdapter(ActivityListView.this, R.layout.listview_item, items, this);
 
@@ -65,11 +58,6 @@ public class ActivityListView extends Activity implements com.kw2.kw2.sit.ListAd
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Intent intent = new Intent(ActivityListView.this, ActivityTimer.class);
                 intent.putExtra("id", items.get(position).getId());
-                intent.putExtra("timeName", items.get(position).getTimeName());
-                intent.putExtra("setNum", items.get(position).getSetNum());
-                intent.putExtra("workTime", items.get(position).getWorkTime());
-                intent.putExtra("restTime", items.get(position).getRestTime());
-                intent.putExtra("timeValue", items.get(position).getTimeValue());
                 startActivity(intent);
             }
 
@@ -78,6 +66,8 @@ public class ActivityListView extends Activity implements com.kw2.kw2.sit.ListAd
             blankText.setText(R.string.list_text);
         }
 
+
+        // 추가 버튼 클릭
         plusBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -89,29 +79,6 @@ public class ActivityListView extends Activity implements com.kw2.kw2.sit.ListAd
 
 
 
-    }
-
-    public boolean loadDB(SQLiteDatabase db, ArrayList<ListViewItem> list) {
-
-        ListViewItem item;
-
-        if (list == null) {
-            list = new ArrayList<ListViewItem>();
-        }
-
-        Cursor cursor = db.rawQuery("SELECT * FROM sit", null);
-        while (cursor.moveToNext()) {
-            item = new ListViewItem();
-            item.setId(cursor.getInt(0));
-            item.setTimeName(cursor.getString(1));
-            item.setSetNum(cursor.getInt(2));
-            item.setWorkTime(cursor.getString(3));
-            item.setRestTime(cursor.getString(4));
-            list.add(item);
-        }
-
-
-        return true;
     }
 
     @Override
@@ -137,6 +104,7 @@ public class ActivityListView extends Activity implements com.kw2.kw2.sit.ListAd
                                     }
                                 }
                                 adapter.notifyDataSetChanged();
+                                Log.d("test delete", "delete On");
                                 if(items.size() == 0){
                                     blankText.setText(R.string.list_text);
                                 }
@@ -162,10 +130,19 @@ public class ActivityListView extends Activity implements com.kw2.kw2.sit.ListAd
 
         adapter.notifyDataSetChanged();
     }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        DBHelper helper = new DBHelper(ActivityListView.this);
+        items.clear();
+        items.addAll(helper.getItems());
+        adapter.notifyDataSetChanged();
+    }
 }
 
 class DialogMaker {
-    public static Dialog newDialog(final Context context, int dbId, final RefreshOnClick refreshOnClick) {
+    public static Dialog newDialog(final Context context, final int dbId, final RefreshOnClick refreshOnClick) {
         final DBHelper helper = new DBHelper(context);
         final Dialog cstDialog = new Dialog(context);
         cstDialog.setContentView(R.layout.dialog_inputtime);
@@ -174,7 +151,9 @@ class DialogMaker {
         params.height = WindowManager.LayoutParams.WRAP_CONTENT;
         cstDialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
 
-        final EditText timeNmae = (EditText) cstDialog.findViewById(R.id.input_timeName);
+        final TextView dialogTitle = (TextView) cstDialog.findViewById(R.id.input_title);
+
+        final EditText timeName = (EditText) cstDialog.findViewById(R.id.input_timeName);
 
         Button setsMinBtn = (Button) cstDialog.findViewById(R.id.setsMinBtn);
         Button setsPlsBtn = (Button) cstDialog.findViewById(R.id.setsPlsBtn);
@@ -330,7 +309,7 @@ class DialogMaker {
                 @Override
                 public void onClick(View view) {
                     // timer 주가 작업
-                    String timeNameStr = timeNmae.getText().toString();
+                    String timeNameStr = timeName.getText().toString();
                     int setInt = Integer.parseInt(setsNum.getText().toString());
                     String wkTimeStr = wtMNum.getText().toString() + ":" + wtSNum.getText().toString();
                     String rtTimeStr = rtMNum.getText().toString() + ":" + rtSNum.getText().toString();
@@ -353,12 +332,35 @@ class DialogMaker {
             });
 
         }else{ // 수정 작업
+            dialogTitle.setText(R.string.input_updateTitle);
             saveBtn.setText(R.string.update);
+
+            ListViewItem item = helper.getItem(dbId);
+
+            timeName.setText(item.getTimeName());
+            setsNum.setText(String.valueOf(item.getSetNum()));
+
+            wtMNum.setText(item.getWorkTime().substring(0,2));
+            wtSNum.setText(item.getWorkTime().substring(3));
+
+            rtMNum.setText(item.getRestTime().substring(0,2));
+            rtSNum.setText(item.getRestTime().substring(3));
+
+
 
             saveBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     // timer 수정 작업
+                    String timeNameStr = timeName.getText().toString();
+                    int setInt = Integer.parseInt(setsNum.getText().toString());
+                    String wkTimeStr = wtMNum.getText().toString() + ":" + wtSNum.getText().toString();
+                    String rtTimeStr = rtMNum.getText().toString() + ":" + rtSNum.getText().toString();
+
+                    helper.updateTime(dbId,timeNameStr, setInt, wkTimeStr, rtTimeStr);
+
+                    Toast.makeText(context, R.string.update_ok, Toast.LENGTH_SHORT).show();
+                    cstDialog.dismiss();
 
                 }
             });
@@ -406,5 +408,7 @@ class DialogMaker {
         }
         return str;
     }
+
+
 }
 
