@@ -21,6 +21,13 @@
         <activity android:name=".ActivityManual"></activity>
         <activity android:name=".ActivityListView"></activity>
         <activity android:name=".ActivityTimer"></activity>
+        
+        <!--<receiver android:name=".ActivityTimer$EndButton_Listener">
+            <intent-filter>
+                <action android:name="endBtn_clicked"></action>
+            </intent-filter>
+        </receiver>-->
+        
     </application>
 
 
