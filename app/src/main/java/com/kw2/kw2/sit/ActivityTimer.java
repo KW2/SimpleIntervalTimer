@@ -224,7 +224,13 @@ public class ActivityTimer extends Activity {
                         }else if(nCounter <= 4 + workTimes + restTimes){
                             if(nCounter == 4 + workTimes + 1 && nowSet == setNum){
                                 mySoundPlay(soundFinish,0,1);
-                                Toast.makeText(ActivityTimer.this, R.string.success, Toast.LENGTH_SHORT).show();
+                                if(isNotification){
+                                    remoteViews.setViewVisibility(R.id.notification_icon, View.INVISIBLE);
+                                    remoteViews.setViewVisibility(R.id.notification_spBtn, View.INVISIBLE);
+                                    remoteViews.setViewVisibility(R.id.notification_endBtn, View.INVISIBLE);
+                                    remoteViews.setTextViewText(R.id.notification_textView, getResources().getString(R.string.success));
+                                    notificationManager.notify(notification_id, builder.build());
+                                }
                                 stopTask();
                                 return;
                             }else if(nCounter == 4 + workTimes + 1){
@@ -286,6 +292,8 @@ public class ActivityTimer extends Activity {
             mTimerTask = null;
             spBtn.setText("▶");
             spBtn.setTag("start");
+
+
         }
     }
 
@@ -340,12 +348,13 @@ public class ActivityTimer extends Activity {
 
             notification_id = (int) System.currentTimeMillis();
             Intent endBtn_intent = new Intent("endBtn_clicked");
-            endBtn_intent.putExtra("noti_id", notification_id);
+            Intent spBtn_intent = new Intent("spBtn_clicked");
 
 
             PendingIntent endBtn_pIntent = PendingIntent.getBroadcast(context, 123, endBtn_intent, 0);
+            PendingIntent spBtn_pIntent = PendingIntent.getBroadcast(context, 123, spBtn_intent, 0);
             remoteViews.setOnClickPendingIntent(R.id.notification_endBtn, endBtn_pIntent);
-
+            remoteViews.setOnClickPendingIntent(R.id.notification_spBtn, spBtn_pIntent);
 
             Intent notification_intent = new Intent(context, ActivityMain.class);
             notification_intent.setAction(Intent.ACTION_MAIN);
@@ -411,9 +420,20 @@ public class ActivityTimer extends Activity {
     BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-            notificationManager.cancel(intent.getExtras().getInt("noti_id"));
-            stopTask();
+            if(intent.getAction().equals("endBtn_clicked")) {
+                isNotification = false;
+                NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                notificationManager.cancel(notification_id);
+                stopTask();
+            }else if(intent.getAction().equals("spBtn_clicked")){
+                doTimerPause();
+                if(bRunning) {
+                    remoteViews.setTextViewText(R.id.notification_spBtn, "||");
+                }else{
+                    remoteViews.setTextViewText(R.id.notification_spBtn, "▶");
+                }
+                notificationManager.notify(notification_id, builder.build());
+            }
         }
     };
 
@@ -422,12 +442,13 @@ public class ActivityTimer extends Activity {
         super.onResume();
         IntentFilter filter = new IntentFilter();
         filter.addAction("endBtn_clicked");
+        filter.addAction("spBtn_clicked");
         registerReceiver(receiver, filter);
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onDestroy() {
+        super.onDestroy();
         unregisterReceiver(receiver);
     }
 }
