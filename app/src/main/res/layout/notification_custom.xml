@@ -8,7 +8,8 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:src="@drawable/ic_launcher_foreground"
-        android:layout_alignParentLeft="true"/>
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="10dp"/>
 
 
     <Button
@@ -17,14 +18,24 @@
         android:layout_height="50dp"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
-        android:text="X"/>
+        android:text="X"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/mybuttonexit"/>
+
     <Button
         android:id="@+id/notification_spBtn"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_centerVertical="true"
         android:layout_toLeftOf="@id/notification_endBtn"
-        android:text="||"/>
+        android:text="||"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/mybuttonpause"
+        />
 
     <TextView
         android:id="@+id/notification_textView"
@@ -34,6 +45,8 @@
         android:layout_toRightOf="@id/notification_icon"
         android:layout_centerInParent="true"
         android:text="1/3 - 00:00"
+        android:textSize="25dp"
+        android:textColor="#000000"
         android:gravity="center"/>
 
 </RelativeLayout>

@@ -8,8 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.TextView;
+
+import com.beardedhen.androidbootstrap.BootstrapButton;
 
 import java.util.ArrayList;
 
@@ -48,7 +49,7 @@ public class ListAdapter extends ArrayAdapter<ListViewItem> {
         TextView timeName = (TextView) convertView.findViewById(R.id.item_timeName);
         TextView timeValue = (TextView) convertView.findViewById(R.id.item_timeValue);
 
-        Button deleteBtn = (Button) convertView.findViewById(R.id.item_deleteBtn);
+        BootstrapButton deleteBtn = (BootstrapButton) convertView.findViewById(R.id.item_deleteBtn);
 
         timeName.setText(listViewItem.getTimeName());
         timeValue.setText(listViewItem.getTimeValue());

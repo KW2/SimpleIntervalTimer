@@ -17,10 +17,13 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.RemoteViews;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.beardedhen.androidbootstrap.BootstrapButton;
+import com.beardedhen.androidbootstrap.api.defaults.DefaultBootstrapBrand;
+import com.beardedhen.androidbootstrap.font.MaterialIcons;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -39,6 +42,7 @@ public class ActivityTimer extends Activity {
 
 
     boolean bRunning = true;
+    String runCheck = "ready";
 
     boolean isSound = true;
 
@@ -69,7 +73,8 @@ public class ActivityTimer extends Activity {
 
 
     TextView timerName, timeValueText, setValue, currentState, nowText;
-    Button spBtn, stopBtn, soundBtn, updateBtn;
+    BootstrapButton updateBtn, spBtn, stopBtn, soundBtn;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -96,10 +101,10 @@ public class ActivityTimer extends Activity {
         currentState = (TextView) findViewById(R.id.timer_currentState);
         nowText = (TextView) findViewById(R.id.timer_nowText);
 
-        updateBtn = (Button) findViewById(R.id.timer_updateBtn);
-        spBtn = (Button) findViewById(R.id.timer_spBtn);
-        stopBtn = (Button) findViewById(R.id.timer_stopBtn);
-        soundBtn = (Button) findViewById(R.id.timer_soundBtn);
+        updateBtn = (BootstrapButton) findViewById(R.id.timer_updateBtn);
+        spBtn = (BootstrapButton) findViewById(R.id.timer_spBtn);
+        stopBtn = (BootstrapButton) findViewById(R.id.timer_stopBtn);
+        soundBtn = (BootstrapButton) findViewById(R.id.timer_soundBtn);
 
 
         timerName.setText(timer.getTimeName());
@@ -119,25 +124,28 @@ public class ActivityTimer extends Activity {
             @Override
             public void onClick(View view) {
                 updateBtn.setEnabled(false);
-                if(view.getTag().equals("start")){
+                if (view.getTag().equals("start")) {
                     // 시작 상태
                     if (mTimerTask == null) {
                         bRunning = true;
                         doTimerTask();
-                        spBtn.setText("||");
+                        spBtn.setMaterialIcon(MaterialIcons.MD_PAUSE);
+                        spBtn.setBootstrapBrand(DefaultBootstrapBrand.SUCCESS);
                         spBtn.setTag("pause");
                     }
 
-                }else if(view.getTag().equals("pause")){
+                } else if (view.getTag().equals("pause")) {
                     // 일시정지 상태
                     doTimerPause();
-                    spBtn.setText("▶");
+                    spBtn.setMaterialIcon(MaterialIcons.MD_PLAY_ARROW);
+                    spBtn.setBootstrapBrand(DefaultBootstrapBrand.PRIMARY);
                     spBtn.setTag("resume");
 
-                }else if(view.getTag().equals("resume")){
+                } else if (view.getTag().equals("resume")) {
                     // 재시작 상태
                     doTimerPause();
-                    spBtn.setText("||");
+                    spBtn.setMaterialIcon(MaterialIcons.MD_PAUSE);
+                    spBtn.setBootstrapBrand(DefaultBootstrapBrand.SUCCESS);
                     spBtn.setTag("pause");
                 }
             }
@@ -169,6 +177,16 @@ public class ActivityTimer extends Activity {
                         timeValueText.setText(item.getTimeValue());
                         setValue.setText(nowSet + " / " + setNum);
 
+                        setNum = item.getSetNum();
+
+                        workTimes = stringToInt(item.getWorkTime());
+                        wkValue = workTimes;
+
+                        restTimes = stringToInt(item.getRestTime());
+                        rtValue = restTimes;
+
+
+
                     }
                 });
 
@@ -180,14 +198,16 @@ public class ActivityTimer extends Activity {
             @Override
             public void onClick(View view) {
 
-                if(soundBtn.getTag().equals("on")){
+                if (soundBtn.getTag().equals("on")) {
                     isSound = false;
                     soundBtn.setTag("off");
-                    soundBtn.setText("X");
-                }else{
+                    soundBtn.setMaterialIcon(MaterialIcons.MD_VOLUME_OFF);
+                    soundBtn.setBootstrapBrand(DefaultBootstrapBrand.WARNING);
+                } else {
                     isSound = true;
                     soundBtn.setTag("on");
-                    soundBtn.setText("♪");
+                    soundBtn.setMaterialIcon(MaterialIcons.MD_VOLUME_UP);
+                    soundBtn.setBootstrapBrand(DefaultBootstrapBrand.INFO);
                 }
             }
         });
@@ -200,63 +220,97 @@ public class ActivityTimer extends Activity {
             public void run() {
                 handler.post(new Runnable() {
                     public void run() {
-                        if(!bRunning) {
+                        if (!bRunning) {
                             return;
                         }
 
-                        if(nCounter <= 4){
+                        if (nCounter <= 4) {
 
-                            mySoundPlay(readyTimes, soundBeep,0,2);
+                            mySoundPlay(readyTimes, soundBeep, 0, 2);
 
                             nowText.setText("00:" + DialogMaker.twoStrForm(readyTimes--));
 
-                        }else if(nCounter <= 4 + workTimes){
-                            if(nCounter == 5){
-                                mySoundPlay(soundStart,0,1);
+                        } else if (nCounter <= 4 + workTimes) {
+                            if (nCounter == 5) {
+                                mySoundPlay(soundStart, 0, 1);
+                                runCheck = "work";
+                                if (isNotification) {
+                                    remoteViews.setImageViewResource(R.id.notification_icon, R.drawable.work);
+                                    builder.setSmallIcon(R.drawable.work);
+                                }
                             }
 
-                            mySoundPlay(wkValue, soundBeep,0,2);
+                            mySoundPlay(wkValue, soundBeep, 0, 2);
 
                             currentState.setText(R.string.workTime);
                             nowText.setText(intToString(wkValue));
                             wkValue--;
 
-                        }else if(nCounter <= 4 + workTimes + restTimes){
-                            if(nCounter == 4 + workTimes + 1 && nowSet == setNum){
-                                mySoundPlay(soundFinish,0,1);
-                                if(isNotification){
-                                    remoteViews.setViewVisibility(R.id.notification_icon, View.INVISIBLE);
+                        } else if (nCounter <= 4 + workTimes + restTimes) {
+                            if ( nCounter == 4 + workTimes + 1 && nowSet == setNum  ) {
+                                mySoundPlay(soundFinish, 0, 1);
+                                Toast.makeText(ActivityTimer.this, R.string.success, Toast.LENGTH_SHORT).show();
+                                if (isNotification) {
+                                    remoteViews.setImageViewResource(R.id.notification_icon, R.drawable.success);
+                                    builder.setSmallIcon(R.drawable.success);
                                     remoteViews.setViewVisibility(R.id.notification_spBtn, View.INVISIBLE);
                                     remoteViews.setViewVisibility(R.id.notification_endBtn, View.INVISIBLE);
                                     remoteViews.setTextViewText(R.id.notification_textView, getResources().getString(R.string.success));
+                                    builder.setOngoing(false);
                                     notificationManager.notify(notification_id, builder.build());
                                 }
                                 stopTask();
                                 return;
-                            }else if(nCounter == 4 + workTimes + 1){
-                                mySoundPlay(soundBeep,1,2);
+                            } else if (nCounter == 4 + workTimes + 1) {
+                                runCheck = "rest";
+                                mySoundPlay(soundBeep, 1, 2);
+                                if (isNotification) {
+                                    remoteViews.setImageViewResource(R.id.notification_icon, R.drawable.rest);
+                                    builder.setSmallIcon(R.drawable.rest);
+                                }
                             }
 
-                            mySoundPlay(rtValue,soundBeep, 0,2);
+                            mySoundPlay(rtValue, soundBeep, 0, 2);
 
                             currentState.setText(R.string.restTime);
                             nowText.setText(intToString(rtValue));
                             rtValue--;
 
-                        }else if(nCounter > 4 + workTimes + restTimes){
-                            nowSet++;
-                            wkValue = workTimes;
-                            rtValue = restTimes;
-                            nCounter = 5;
-                            mySoundPlay(soundStart,0,1);
-                            setValue.setText(nowSet + " / " + setNum);
-                            nowText.setText(intToString(wkValue));
-                            currentState.setText(R.string.workTime);
-                            wkValue--;
+                        } else if (nCounter > 4 + workTimes + restTimes) {
+                            if ( nCounter == 4 + workTimes + 1 && nowSet == setNum  ) {
+                                mySoundPlay(soundFinish, 0, 1);
+                                Toast.makeText(ActivityTimer.this, R.string.success, Toast.LENGTH_SHORT).show();
+                                if (isNotification) {
+                                    remoteViews.setImageViewResource(R.id.notification_icon, R.drawable.success);
+                                    builder.setSmallIcon(R.drawable.success);
+                                    remoteViews.setViewVisibility(R.id.notification_spBtn, View.INVISIBLE);
+                                    remoteViews.setViewVisibility(R.id.notification_endBtn, View.INVISIBLE);
+                                    remoteViews.setTextViewText(R.id.notification_textView, getResources().getString(R.string.success));
+                                    builder.setOngoing(false);
+                                    notificationManager.notify(notification_id, builder.build());
+                                }
+                                stopTask();
+                                return;
+                            }else {
+                                nowSet++;
+                                wkValue = workTimes;
+                                rtValue = restTimes;
+                                nCounter = 5;
+                                mySoundPlay(soundStart, 0, 1);
+                                setValue.setText(nowSet + " / " + setNum);
+                                nowText.setText(intToString(wkValue));
+                                currentState.setText(R.string.workTime);
+                                wkValue--;
+                                runCheck = "work";
+                                if (isNotification) {
+                                    remoteViews.setImageViewResource(R.id.notification_icon, R.drawable.work);
+                                    builder.setSmallIcon(R.drawable.work);
+                                }
+                            }
                         }
 
                         nCounter++;
-                        if(isNotification){
+                        if (isNotification) {
                             remoteViews.setTextViewText(R.id.notification_textView, setValue.getText().toString() + " - " + nowText.getText().toString());
                             notificationManager.notify(notification_id, builder.build());
                         }
@@ -285,22 +339,24 @@ public class ActivityTimer extends Activity {
             rtValue = restTimes;
             setValue.setText(nowSet + " / " + setNum);
             nowText.setText("00:05");
+            runCheck = "ready";
 
             nCounter = 0;
             bRunning = false;
             mTimerTask.cancel();
             mTimerTask = null;
-            spBtn.setText("▶");
+            spBtn.setMaterialIcon(MaterialIcons.MD_PLAY_ARROW);
+            spBtn.setBootstrapBrand(DefaultBootstrapBrand.PRIMARY);
             spBtn.setTag("start");
 
 
         }
     }
 
-    public int stringToInt(String timeValue){
+    public int stringToInt(String timeValue) {
         int intTimeValue = 0;
 
-        int mInt = Integer.parseInt(timeValue.substring(0,2)) * 60;
+        int mInt = Integer.parseInt(timeValue.substring(0, 2)) * 60;
         int sint = Integer.parseInt(timeValue.substring(3));
 
         intTimeValue = mInt + sint;
@@ -308,15 +364,15 @@ public class ActivityTimer extends Activity {
         return intTimeValue;
     }
 
-    public String intToString(int intTimeValue){
+    public String intToString(int intTimeValue) {
         String timeValue = "00:00";
 
         String mString = "00";
         String sString = "00";
 
-        if(intTimeValue != 0){
-            mString = String.valueOf( DialogMaker.twoStrForm(intTimeValue / 60) );
-            sString = String.valueOf( DialogMaker.twoStrForm(intTimeValue % 60) );
+        if (intTimeValue != 0) {
+            mString = String.valueOf(DialogMaker.twoStrForm(intTimeValue / 60));
+            sString = String.valueOf(DialogMaker.twoStrForm(intTimeValue % 60));
         }
 
         timeValue = mString + ":" + sString;
@@ -324,26 +380,26 @@ public class ActivityTimer extends Activity {
         return timeValue;
     }
 
-    public void mySoundPlay(int soundId, int option, int speed){
-        if(isSound) {
+    public void mySoundPlay(int soundId, int option, int speed) {
+        if (isSound) {
             // 준비한 soundID   볼륨 0.0(작은소리)~1.0(큰소리)  우선순위 반복회수 int -1:무한반복, 0:반복안함 재생속도
             sp.play(soundId, 1, 1, 0, option, speed);
         }
     }
 
-    public void mySoundPlay(int value, int soundId, int option, int speed){
-        if( isSound && value <= 3) {
+    public void mySoundPlay(int value, int soundId, int option, int speed) {
+        if (isSound && value <= 3) {
             sp.play(soundId, 1, 1, 0, option, speed);
         }
     }
 
     public void sendNotification() {
-        if(notificationManager == null) {
+        if (notificationManager == null) {
             context = ActivityTimer.this;
             notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
             remoteViews = new RemoteViews(getPackageName(), R.layout.notification_custom);
 
-            remoteViews.setImageViewResource(R.id.notification_icon, R.mipmap.ic_launcher);
+
             remoteViews.setTextViewText(R.id.notification_textView, setValue.getText().toString() + " - " + nowText.getText().toString());
 
             notification_id = (int) System.currentTimeMillis();
@@ -366,8 +422,26 @@ public class ActivityTimer extends Activity {
             builder = new Notification.Builder(context);
             builder.setSmallIcon(R.mipmap.ic_launcher)
                     .setAutoCancel(true)
+                    .setOngoing(true)
                     .setCustomContentView(remoteViews)
                     .setContentIntent(pendingIntent);
+
+
+        }
+        if (runCheck.equals("ready")) {
+            remoteViews.setImageViewResource(R.id.notification_icon, R.drawable.ready);
+            builder.setSmallIcon(R.drawable.ready);
+        } else if (runCheck.equals("work")) {
+            remoteViews.setImageViewResource(R.id.notification_icon, R.drawable.work);
+            builder.setSmallIcon(R.drawable.work);
+        } else if (runCheck.equals("rest")) {
+            remoteViews.setImageViewResource(R.id.notification_icon, R.drawable.rest);
+            builder.setSmallIcon(R.drawable.rest);
+        }
+        remoteViews.setTextViewText(R.id.notification_spBtn, "Ⅱ");
+        if (!bRunning) {
+            remoteViews.setImageViewResource(R.id.notification_icon, R.drawable.pauseicon);
+            remoteViews.setTextViewText(R.id.notification_spBtn, "▶");
         }
         notificationManager.notify(notification_id, builder.build());
         isNotification = true;
@@ -376,8 +450,8 @@ public class ActivityTimer extends Activity {
     // 백키 클릭시 timer 작동 중에는 홈 화면 이동, timer 대기 중에는 뒤로 이동
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(event.getAction() == KeyEvent.ACTION_DOWN){
-            if(keyCode == KeyEvent.KEYCODE_BACK && mTimerTask != null){
+        if (event.getAction() == KeyEvent.ACTION_DOWN) {
+            if (keyCode == KeyEvent.KEYCODE_BACK && mTimerTask != null) {
                 sendNotification();
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_MAIN);
@@ -388,19 +462,11 @@ public class ActivityTimer extends Activity {
         return super.onKeyDown(keyCode, event);
     }
 
-    @Override
-    protected void onRestart() {
-        if(isNotification && notificationManager != null) {
-            isNotification = false;
-            notificationManager.cancel(notification_id);
-        }
-        super.onRestart();
-    }
 
     // 홈버튼 클릭시 timer 작동 중에는 notification 생성, tiemr 대기 중에는 그냥 이동
     @Override
     protected void onUserLeaveHint() {
-        if(mTimerTask != null) {
+        if (mTimerTask != null) {
             sendNotification();
         }
         super.onUserLeaveHint();
@@ -420,16 +486,24 @@ public class ActivityTimer extends Activity {
     BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(intent.getAction().equals("endBtn_clicked")) {
+            if (intent.getAction().equals("endBtn_clicked")) {
                 isNotification = false;
                 NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
                 notificationManager.cancel(notification_id);
                 stopTask();
-            }else if(intent.getAction().equals("spBtn_clicked")){
+            } else if (intent.getAction().equals("spBtn_clicked")) {
                 doTimerPause();
-                if(bRunning) {
+                if (bRunning) {
+                    if (runCheck.equals("ready")) {
+                        remoteViews.setImageViewResource(R.id.notification_icon, R.drawable.ready);
+                    } else if (runCheck.equals("work")) {
+                        remoteViews.setImageViewResource(R.id.notification_icon, R.drawable.work);
+                    } else if (runCheck.equals("rest")) {
+                        remoteViews.setImageViewResource(R.id.notification_icon, R.drawable.rest);
+                    }
                     remoteViews.setTextViewText(R.id.notification_spBtn, "||");
-                }else{
+                } else {
+                    remoteViews.setImageViewResource(R.id.notification_icon, R.drawable.pauseicon);
                     remoteViews.setTextViewText(R.id.notification_spBtn, "▶");
                 }
                 notificationManager.notify(notification_id, builder.build());
@@ -440,6 +514,10 @@ public class ActivityTimer extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+        isNotification = false;
+        if (notificationManager != null) {
+            notificationManager.cancel(notification_id);
+        }
         IntentFilter filter = new IntentFilter();
         filter.addAction("endBtn_clicked");
         filter.addAction("spBtn_clicked");

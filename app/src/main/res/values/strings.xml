@@ -5,10 +5,12 @@
     <string name="btn_list">목록 보기</string>
     <string name="btn_manual">사용 설명</string>
     <string name="btn_language">언어 변경</string>
+    <string name="btn_exit">종료 하기</string>
     <string name="btn_ko">한 국 어</string>
     <string name="btn_en">English</string>
     <string name="btn_ja">日本語</string>
     <string name="tip_timeName">타이머 이름을 입력해주세요.</string>
+    <string name="timeName_30">30자 이내로 이름을 입력해주세요.</string>
     <string name="setNum">반복 횟수</string>
     <string name="workTime">작업 시간</string>
     <string name="restTime">휴식 시간</string>
@@ -26,4 +28,15 @@
     <string name="update_ok">수정 완료</string>
     <string name="readyTime">준비</string>
     <string name="success">성공!!!</string>
+    <string name="manual_plusbtn">타이머 추가</string>
+    <string name="manual_updatebtn">타이머 수정</string>
+    <string name="manual_deletebtn">타이머 삭제</string>
+    <string name="manual_soundon">사운드 ON</string>
+    <string name="manual_soundoff">사운드 OFF</string>
+    <string name="manual_stop">타이머 멈춤</string>
+    <string name="manual_play">타이머 재생/재시작</string>
+    <string name="manual_resume">타이머 재시작</string>
+    <string name="manual_pause">타이머 일시정지</string>
+    <string name="manual_success">타이머 완료</string>
+
 </resources>

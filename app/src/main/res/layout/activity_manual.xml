@@ -1,11 +1,242 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#C4FDFF">
 
-    <TextView
+    <com.beardedhen.androidbootstrap.BootstrapLabel
+        android:id="@+id/manual_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="manual액티비티"/>
+        android:gravity="center"
+        android:text="@string/btn_manual"
+        android:textSize="30dp"
+        app:bootstrapBrand="info"
+        app:bootstrapHeading="h4" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/manual_title"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp">
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TableRow android:layout_marginBottom="5dp">
+
+                    <com.beardedhen.androidbootstrap.BootstrapButton
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginRight="3dp"
+                        android:text=" "
+                        app:bootstrapBrand="primary"
+                        app:fontAwesomeIcon="fa_plus"
+                        app:roundedCorners="true" />
+
+                    <TextView
+                        android:text="@string/manual_plusbtn"
+                        android:textColor="#000000" />
+
+                    <com.beardedhen.androidbootstrap.BootstrapButton
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginRight="3dp"
+                        android:text=" "
+                        app:bootstrapBrand="primary"
+                        app:materialIcon="md_settings"
+                        app:roundedCorners="true" />
+
+                    <TextView
+                        android:text="@string/manual_updatebtn"
+                        android:textColor="#000000" />
+
+
+                </TableRow>
+
+                <TableRow android:layout_marginBottom="10dp">
+
+                    <com.beardedhen.androidbootstrap.BootstrapButton
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginRight="3dp"
+                        android:text=" "
+                        app:bootstrapBrand="danger"
+                        app:materialIcon="md_delete"
+                        app:roundedCorners="true" />
+
+                    <TextView
+                        android:text="@string/manual_deletebtn"
+                        android:textColor="#000000" />
+                </TableRow>
+
+                <TableRow android:layout_marginBottom="5dp">
+
+                    <com.beardedhen.androidbootstrap.BootstrapButton
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginRight="3dp"
+                        android:text=" "
+                        app:bootstrapBrand="info"
+                        app:materialIcon="md_volume_up" />
+
+                    <TextView
+                        android:text="@string/manual_soundon"
+                        android:textColor="#000000" />
+
+                    <com.beardedhen.androidbootstrap.BootstrapButton
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginRight="3dp"
+                        android:text=" "
+                        app:bootstrapBrand="warning"
+                        app:materialIcon="md_volume_off" />
+
+                    <TextView
+                        android:text="@string/manual_soundoff"
+                        android:textColor="#000000" />
+
+
+                </TableRow>
+
+                <TableRow android:layout_marginBottom="10dp">
+
+                    <com.beardedhen.androidbootstrap.BootstrapButton
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginRight="3dp"
+                        android:text=" "
+                        app:bootstrapBrand="primary"
+                        app:materialIcon="md_play_arrow" />
+
+                    <TextView
+                        android:layout_marginRight="3dp"
+                        android:text="@string/manual_play"
+                        android:textColor="#000000" />
+
+                    <com.beardedhen.androidbootstrap.BootstrapButton
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginRight="3dp"
+                        android:text=" "
+                        app:bootstrapBrand="success"
+                        app:materialIcon="md_pause" />
+
+                    <TextView
+                        android:text="@string/manual_pause"
+                        android:textColor="#000000" />
+
+                </TableRow>
+
+                <TableRow android:layout_marginBottom="5dp">
+
+                    <com.beardedhen.androidbootstrap.BootstrapButton
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginRight="3dp"
+                        android:text=" "
+                        app:materialIcon="md_stop" />
+
+                    <TextView
+                        android:text="@string/manual_stop"
+                        android:textColor="#000000" />
+
+                    <Button
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginRight="3dp"
+                        android:background="@drawable/mybuttonexit"
+                        android:text="X"
+                        android:textColor="#FFFFFF"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:text="@string/manual_stop"
+                        android:textColor="#000000" />
+                </TableRow>
+
+                <TableRow android:layout_marginBottom="10dp">
+
+                    <Button
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginRight="3dp"
+                        android:background="@drawable/mybuttonpause"
+                        android:text="▶"
+                        android:textColor="#FFFFFF"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:text="@string/manual_resume"
+                        android:textColor="#000000" />
+
+                    <Button
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginRight="3dp"
+                        android:background="@drawable/mybuttonpause"
+                        android:text="||"
+                        android:textStyle="bold"
+                        android:textColor="#FFFFFF"
+                        />
+
+                    <TextView
+                        android:text="@string/manual_pause"
+                        android:textColor="#000000" />
+
+                </TableRow>
+
+                <TableRow android:layout_marginBottom="5dp">
+
+                    <ImageView
+                        android:layout_marginRight="3dp"
+                        android:src="@drawable/ready" />
+
+                    <TextView
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/readyTime"
+                        android:textColor="#000000" />
+
+                    <ImageView
+                        android:layout_marginRight="3dp"
+                        android:src="@drawable/work" />
+
+                    <TextView
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/workTime"
+                        android:textColor="#000000" />
+                </TableRow>
+
+                <TableRow>
+
+                    <ImageView
+                        android:layout_marginRight="3dp"
+                        android:src="@drawable/rest" />
+
+                    <TextView
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/restTime"
+                        android:textColor="#000000" />
+
+                    <ImageView
+                        android:layout_marginRight="3dp"
+                        android:src="@drawable/success" />
+
+                    <TextView
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/manual_success"
+                        android:textColor="#000000" />
+                </TableRow>
+
+            </TableLayout>
+        </HorizontalScrollView>
+    </ScrollView>
+
 </RelativeLayout>

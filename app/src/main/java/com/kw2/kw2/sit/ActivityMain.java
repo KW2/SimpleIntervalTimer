@@ -9,25 +9,37 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+
+import com.beardedhen.androidbootstrap.BootstrapButton;
+import com.beardedhen.androidbootstrap.TypefaceProvider;
 
 import java.util.ArrayList;
 
 public class ActivityMain extends Activity implements View.OnClickListener {
 
+    public static Activity mainActivity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        TypefaceProvider.registerDefaultIconSets();
         setContentView(R.layout.activity_main);
 
-        Button listBtn = (Button) findViewById(R.id.main_listBtn);
-        Button manualBtn = (Button) findViewById(R.id.main_manualBtn);
-        Button languageBtn = (Button) findViewById(R.id.main_languageBtn);
+        mainActivity = ActivityMain.this;
+
+        BootstrapButton listBtn = (BootstrapButton) findViewById(R.id.main_listBtn);
+        BootstrapButton manualBtn = (BootstrapButton) findViewById(R.id.main_manualBtn);
+        BootstrapButton languageBtn = (BootstrapButton) findViewById(R.id.main_languageBtn);
+        BootstrapButton exitBtn = (BootstrapButton) findViewById(R.id.main_exitBtn);
 
         listBtn.setOnClickListener(this);
         manualBtn.setOnClickListener(this);
         languageBtn.setOnClickListener(this);
+        exitBtn.setOnClickListener(this);
+
     }
+
+
 
     @Override
     public void onClick(View view) {
@@ -47,6 +59,9 @@ public class ActivityMain extends Activity implements View.OnClickListener {
                 // 언어 변경
                 intent = new Intent(getApplicationContext(), ActivityLanguage.class);
                 startActivity(intent);
+                break;
+            case R.id.main_exitBtn:
+                // 종료 하기
                 break;
         }
     }

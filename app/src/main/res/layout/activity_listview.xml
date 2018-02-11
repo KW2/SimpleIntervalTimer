@@ -2,21 +2,32 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#C4FDFF">
 
-    <TextView
+    <com.beardedhen.androidbootstrap.BootstrapLabel
+        app:bootstrapBrand="info"
+        app:bootstrapHeading="h4"
         android:id="@+id/list_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="기록 보기"
+        android:text="@string/btn_list"
         android:textSize="30dp"
         android:gravity="center"
         />
-    <Button
+    <com.beardedhen.androidbootstrap.BootstrapButton
+        app:bootstrapBrand="primary"
+        app:fontAwesomeIcon="fa_plus"
+        app:bootstrapSize="xl"
+        app:roundedCorners="true"
         android:id="@+id/list_plusBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/list_title"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:text="+"/>
     <TextView
         android:id="@+id/list_text"
