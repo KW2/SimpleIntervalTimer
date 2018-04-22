@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SIT</string>
+    <string name="app_name">SIT - Simple Interval Timer</string>
     <string name="main_title">Simple Timer</string>
     <string name="btn_plus">Add time</string>
     <string name="btn_list">Timer List</string>
@@ -38,4 +38,7 @@
     <string name="manual_resume">Timer Resume</string>
     <string name="manual_pause">Timer Pause</string>
     <string name="manual_success">Timer Success</string>
+    <string name="ad_yes">Yes</string>
+    <string name="ad_no">No</string>
+    <string name="ad_exit">Do you want to quit?</string>
 </resources>

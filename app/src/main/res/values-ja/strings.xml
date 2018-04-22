@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SIT</string>
+    <string name="app_name">SIT - Simple Interval Timer</string>
     <string name="main_title">シンプルタイマー</string>
     <string name="btn_plus">時間 追加</string>
     <string name="btn_list">リスト</string>
@@ -38,4 +38,7 @@
     <string name="manual_resume">タイマー再開</string>
     <string name="manual_pause">タイマの一時停止</string>
     <string name="manual_success">タイマー成功</string>
+    <string name="ad_yes">はい</string>
+    <string name="ad_no">いいえ</string>
+    <string name="ad_exit">終了しますか?</string>
 </resources>

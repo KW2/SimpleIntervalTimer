@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SIT</string>
+    <string name="app_name">SIT - Simple Interval Timer</string>
     <string name="main_title">간편 타이머</string>
     <string name="btn_plus">시간 추가</string>
     <string name="btn_list">목록 보기</string>
@@ -38,5 +38,8 @@
     <string name="manual_resume">타이머 재시작</string>
     <string name="manual_pause">타이머 일시정지</string>
     <string name="manual_success">타이머 완료</string>
+    <string name="ad_yes">네</string>
+    <string name="ad_no">아니요</string>
+    <string name="ad_exit">종료 할까요?</string>
 
 </resources>

@@ -57,4 +57,12 @@
         />
 
 
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/language_ad"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        ads:adUnitId="ca-app-pub-2916712541842638/7819240303"
+        ads:adSize="SMART_BANNER"/>
 </RelativeLayout>

@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.AudioManager;
 import android.media.SoundPool;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -186,7 +187,6 @@ public class ActivityTimer extends Activity {
                         rtValue = restTimes;
 
 
-
                     }
                 });
 
@@ -247,7 +247,7 @@ public class ActivityTimer extends Activity {
                             wkValue--;
 
                         } else if (nCounter <= 4 + workTimes + restTimes) {
-                            if ( nCounter == 4 + workTimes + 1 && nowSet == setNum  ) {
+                            if (nCounter == 4 + workTimes + 1 && nowSet == setNum) {
                                 mySoundPlay(soundFinish, 0, 1);
                                 Toast.makeText(ActivityTimer.this, R.string.success, Toast.LENGTH_SHORT).show();
                                 if (isNotification) {
@@ -277,7 +277,7 @@ public class ActivityTimer extends Activity {
                             rtValue--;
 
                         } else if (nCounter > 4 + workTimes + restTimes) {
-                            if ( nCounter == 4 + workTimes + 1 && nowSet == setNum  ) {
+                            if (nCounter == 4 + workTimes + 1 && nowSet == setNum) {
                                 mySoundPlay(soundFinish, 0, 1);
                                 Toast.makeText(ActivityTimer.this, R.string.success, Toast.LENGTH_SHORT).show();
                                 if (isNotification) {
@@ -291,7 +291,7 @@ public class ActivityTimer extends Activity {
                                 }
                                 stopTask();
                                 return;
-                            }else {
+                            } else {
                                 nowSet++;
                                 wkValue = workTimes;
                                 rtValue = restTimes;
@@ -412,7 +412,7 @@ public class ActivityTimer extends Activity {
             remoteViews.setOnClickPendingIntent(R.id.notification_endBtn, endBtn_pIntent);
             remoteViews.setOnClickPendingIntent(R.id.notification_spBtn, spBtn_pIntent);
 
-            Intent notification_intent = new Intent(context, ActivityMain.class);
+            Intent notification_intent = new Intent(context, ActivityLoding.class);
             notification_intent.setAction(Intent.ACTION_MAIN);
             notification_intent.addCategory(Intent.CATEGORY_LAUNCHER);
 
@@ -420,11 +420,20 @@ public class ActivityTimer extends Activity {
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, notification_intent, 0);
 
             builder = new Notification.Builder(context);
-            builder.setSmallIcon(R.mipmap.ic_launcher)
-                    .setAutoCancel(true)
-                    .setOngoing(true)
-                    .setCustomContentView(remoteViews)
-                    .setContentIntent(pendingIntent);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                builder.setSmallIcon(R.drawable.ready)
+                        .setAutoCancel(true)
+                        .setOngoing(true)
+                        .setCustomContentView(remoteViews)
+                        .setContentIntent(pendingIntent);
+            } else {
+                builder.setSmallIcon(R.drawable.ready)
+                        .setAutoCancel(true)
+                        .setOngoing(true)
+                        .setContent(remoteViews)
+                        .setContentIntent(pendingIntent);
+            }
 
 
         }
@@ -472,16 +481,7 @@ public class ActivityTimer extends Activity {
         super.onUserLeaveHint();
     }
 
-    /*public class EndButton_Listener extends BroadcastReceiver {
 
-        @Override
-        public void onReceive(Context context, Intent intent) {
-
-            NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-            notificationManager.cancel(intent.getExtras().getInt("noti_id"));
-            stopTask();
-        }
-    }*/
 
     BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
@@ -528,6 +528,9 @@ public class ActivityTimer extends Activity {
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(receiver);
+        if (notificationManager != null) {
+            notificationManager.cancel(notification_id);
+        }
     }
 }
 

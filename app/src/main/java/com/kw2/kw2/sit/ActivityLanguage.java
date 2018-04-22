@@ -8,6 +8,8 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import java.util.Locale;
 
@@ -28,45 +30,47 @@ public class ActivityLanguage extends Activity implements View.OnClickListener {
         koBtn.setOnClickListener(this);
         enBtn.setOnClickListener(this);
         jaBtn.setOnClickListener(this);
+
+        AdView mAdView = (AdView) findViewById(R.id.language_ad);
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
+        mAdView.loadAd(adRequest);
     }
 
     @Override
     public void onClick(View view) {
+        Configuration config = new Configuration();
         switch (view.getId()){
             case R.id.language_koBtn:
                 // 한국어 선택
                 Locale ko = Locale.KOREA;
-                Configuration config = new Configuration();
-                config.locale = ko;
+                config.setLocale(ko);
                 getResources().updateConfiguration(config, getResources().getDisplayMetrics());
 
-                ActivityMain.mainActivity.finish();
-                this.finish();
-                startActivity(new Intent(this, ActivityMain.class));
+                myExit();
                 break;
             case R.id.language_enBtn:
                 // 영어 선택
                 Locale en = Locale.US;
-                Configuration config1 = new Configuration();
-                config1.locale = en;
-                getResources().updateConfiguration(config1, getResources().getDisplayMetrics());
+                config.setLocale(en);
+                getResources().updateConfiguration(config, getResources().getDisplayMetrics());
 
-                ActivityMain.mainActivity.finish();
-                this.finish();
-                startActivity(new Intent(this, ActivityMain.class));
+                myExit();
                 break;
             case R.id.language_jaBtn:
                 // 일본어 선택
                 Locale ja = Locale.JAPAN;
-                Configuration config2 = new Configuration();
-                config2.locale = ja;
-                getResources().updateConfiguration(config2, getResources().getDisplayMetrics());
+                config.setLocale(ja);
+                getResources().updateConfiguration(config, getResources().getDisplayMetrics());
 
-                ActivityMain.mainActivity.finish();
-                this.finish();
-                startActivity(new Intent(this, ActivityMain.class));
+                myExit();
                 break;
 
         }
+    }
+
+    public void myExit(){
+        ActivityMain.mainActivity.finish();
+        this.finish();
+        startActivity(new Intent(this, ActivityMain.class));
     }
 }
