@@ -1,68 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/mybackground">
+
 
     <TextView
         android:id="@+id/language_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="100dp"
+        android:layout_marginTop="50dp"
         android:text="@string/btn_language"
         android:textColor="#000000"
         android:textSize="40dp"
-        android:textStyle="bold"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="100dp"
-        android:layout_marginTop="50dp"/>
+        android:textStyle="bold" />
 
-    <com.beardedhen.androidbootstrap.BootstrapButton
-        app:bootstrapSize="xl"
-        app:roundedCorners="true"
-        app:bootstrapBrand="info"
-        android:id="@+id/language_koBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/btn_ko"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/language_title"
-        android:layout_marginBottom="5dp"
-        />
-    <com.beardedhen.androidbootstrap.BootstrapButton
-        app:bootstrapSize="xl"
-        app:roundedCorners="true"
-        app:bootstrapBrand="info"
-        android:id="@+id/language_enBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/btn_en"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/language_koBtn"
-        android:layout_marginBottom="5dp"
-        />
-    <com.beardedhen.androidbootstrap.BootstrapButton
-        app:bootstrapSize="xl"
-        app:roundedCorners="true"
-        app:bootstrapBrand="info"
-        android:id="@+id/language_jaBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/btn_ja"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/language_enBtn"
-        android:layout_alignLeft="@id/language_enBtn"
-        android:layout_alignRight="@id/language_enBtn"
-        android:layout_marginBottom="5dp"
-        />
-
-
-    <com.google.android.gms.ads.AdView
-        xmlns:ads="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/language_ad"
-        android:layout_alignParentBottom="true"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        ads:adUnitId="ca-app-pub-2916712541842638/7819240303"
-        ads:adSize="SMART_BANNER"/>
+        android:layout_height="match_parent"
+        android:layout_below="@id/language_title"
+        android:fillViewport="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.beardedhen.androidbootstrap.BootstrapButton
+                android:id="@+id/language_koBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="5dp"
+                android:text="@string/btn_ko"
+                app:bootstrapBrand="info"
+                app:bootstrapSize="xl"
+
+                app:roundedCorners="true" />
+
+            <com.beardedhen.androidbootstrap.BootstrapButton
+                android:id="@+id/language_enBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/language_koBtn"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="5dp"
+                android:text="@string/btn_en"
+                app:bootstrapBrand="info"
+                app:bootstrapSize="xl"
+                app:roundedCorners="true" />
+
+            <com.beardedhen.androidbootstrap.BootstrapButton
+                android:id="@+id/language_jaBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/language_enBtn"
+                android:layout_alignRight="@id/language_enBtn"
+                android:layout_below="@id/language_enBtn"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="5dp"
+                android:text="@string/btn_ja"
+                app:bootstrapBrand="info"
+                app:bootstrapSize="xl"
+                app:roundedCorners="true" />
+
+
+            <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/language_ad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                ads:adSize="SMART_BANNER"
+                ads:adUnitId="ca-app-pub-2916712541842638/7819240303" />
+        </RelativeLayout>
+    </ScrollView>
 </RelativeLayout>

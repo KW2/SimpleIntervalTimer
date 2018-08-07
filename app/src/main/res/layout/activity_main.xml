@@ -1,93 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:ads="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/mybackground">
+    android:fillViewport="true">
 
-
-    <TextView
-        android:id="@+id/main_title"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/main_title"
-        android:gravity="center"
-        android:textColor="#000000"
-        android:textSize="40dp"
-        android:textStyle="bold"
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="50dp"
-        />
+        android:background="@drawable/mybackground">
 
-    <com.beardedhen.androidbootstrap.BootstrapButton
-        app:bootstrapSize="xl"
-        app:roundedCorners="true"
-        app:bootstrapBrand="info"
-        android:id="@+id/main_listBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/btn_list"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/main_title"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        />
+        <LinearLayout
+            android:id="@+id/linear1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/main_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="50dp"
+                android:layout_marginTop="50dp"
+                android:gravity="center"
+                android:text="@string/main_title"
+                android:textColor="#000000"
+                android:textSize="40dp"
+                android:textStyle="bold" />
 
-    <com.beardedhen.androidbootstrap.BootstrapButton
-        app:bootstrapSize="xl"
-        app:roundedCorners="true"
-        app:bootstrapBrand="info"
-        android:id="@+id/main_manualBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/btn_manual"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/main_listBtn"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        />
-    <com.beardedhen.androidbootstrap.BootstrapButton
-        app:bootstrapSize="xl"
-        app:roundedCorners="true"
-        app:bootstrapBrand="info"
-        android:id="@+id/main_languageBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Language"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/main_manualBtn"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        />
-    <com.beardedhen.androidbootstrap.BootstrapButton
-        app:bootstrapSize="xl"
-        app:roundedCorners="true"
-        app:bootstrapBrand="info"
-        android:id="@+id/main_exitBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/btn_exit"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/main_languageBtn"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        />
+            <com.beardedhen.androidbootstrap.BootstrapButton
+                android:id="@+id/main_listBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/main_title"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:text="@string/btn_list"
+                app:bootstrapBrand="info"
+                app:bootstrapSize="xl"
+                app:roundedCorners="true" />
 
 
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/main_ad"
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        ads:adUnitId="ca-app-pub-2916712541842638/8090703046"
-        ads:adSize="SMART_BANNER"/>
+            <com.beardedhen.androidbootstrap.BootstrapButton
+                android:id="@+id/main_manualBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/main_listBtn"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:text="@string/btn_manual"
+                app:bootstrapBrand="info"
+                app:bootstrapSize="xl"
+                app:roundedCorners="true" />
+
+            <com.beardedhen.androidbootstrap.BootstrapButton
+                android:id="@+id/main_languageBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/main_manualBtn"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:text="Language"
+                app:bootstrapBrand="info"
+                app:bootstrapSize="xl"
+                app:roundedCorners="true" />
+
+            <com.beardedhen.androidbootstrap.BootstrapButton
+                android:id="@+id/main_exitBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/main_languageBtn"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:text="@string/btn_exit"
+                app:bootstrapBrand="info"
+                app:bootstrapSize="xl"
+                app:roundedCorners="true" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_below="@id/linear1"
+            android:gravity="bottom"
+            android:orientation="vertical">
+
+            <com.google.android.gms.ads.AdView
+                android:id="@+id/main_ad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                ads:adSize="SMART_BANNER"
+                ads:adUnitId="ca-app-pub-2916712541842638/8090703046" />
+        </LinearLayout>
 
 
-
-</RelativeLayout>
+    </RelativeLayout>
+</ScrollView>

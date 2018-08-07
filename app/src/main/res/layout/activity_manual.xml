@@ -17,9 +17,10 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@id/manual_title"
         android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:layout_marginTop="10dp">
 
         <HorizontalScrollView
@@ -27,7 +28,7 @@
             android:layout_height="wrap_content">
 
             <TableLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
                 <TableRow android:layout_marginBottom="5dp">
@@ -234,18 +235,20 @@
                         android:text="@string/manual_success"
                         android:textColor="#000000" />
                 </TableRow>
+                <TableRow>
+                    <TextView />
+                </TableRow>
+                    <com.google.android.gms.ads.AdView
+                        xmlns:ads="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/manual_ad"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        ads:adUnitId="ca-app-pub-2916712541842638/4444345340"
+                        ads:adSize="SMART_BANNER"/>
 
             </TableLayout>
         </HorizontalScrollView>
     </ScrollView>
 
-    <com.google.android.gms.ads.AdView
-        xmlns:ads="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/manual_ad"
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        ads:adUnitId="ca-app-pub-2916712541842638/4444345340"
-        ads:adSize="SMART_BANNER"/>
 
 </RelativeLayout>
